@@ -1,0 +1,93 @@
+# Neo4j API
+
+A simple FastAPI-based REST API for managing products, categories, suppliers, customers, and orders using a Neo4j graph database.
+
+## Features
+
+- CRUD operations for products, categories, suppliers, customers, and orders
+- Neo4j database integration via `neomodel`
+- FastAPI routers for clean API design
+- Built-in health check endpoint
+
+## Requirements
+
+- Python 3.11+ (or compatible)
+- Neo4j database
+- `docker-compose` (recommended for local Neo4j setup)
+
+## Setup
+
+1. Create and activate a Python virtual environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+2. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Start Neo4j locally with Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+4. Confirm Neo4j is running on `http://localhost:7474` and Bolt is available on `bolt://localhost:7687`.
+
+## Configuration
+
+This project now uses a `.env` file for application database configuration and Docker secrets for Neo4j authentication.
+
+- Copy `.env.example` to `.env` and update `NEOMODEL_DATABASE_URL` as needed.
+- Copy `secrets/neo4j_password.txt.example` to `secrets/neo4j_password.txt` and replace the placeholder password.
+
+The Neo4j service uses Docker secrets to keep the DB password out of version control.
+
+## Run the API
+
+```bash
+uvicorn app.main:app --reload
+```
+
+The API will be available at `http://127.0.0.1:8000`.
+
+## Endpoints
+
+The application includes routers for:
+
+- `/products`
+- `/categories`
+- `/suppliers`
+- `/customers`
+- `/orders`
+
+Use the generated OpenAPI docs at `http://127.0.0.1:8000/docs` for detailed operation information.
+
+## Testing
+
+Run tests with:
+
+```bash
+pytest
+```
+
+## Project Structure
+
+- `app/`
+  - `main.py` - FastAPI application entrypoint
+  - `database.py` - Neo4j database connection management
+  - `routers/` - API route definitions
+  - `schemas/` - Pydantic request/response schemas
+  - `services/` - business logic and CRUD operations
+  - `models/` - domain model definitions
+- `tests/` - test suite
+- `docker-compose.yaml` - local Neo4j service definition
+- `requirements.txt` - Python dependencies
+
+## Notes
+
+This repository is designed as a starter API blueprint for Neo4j-backed FastAPI services. Adjust database settings, authentication, and models to fit your use case.
