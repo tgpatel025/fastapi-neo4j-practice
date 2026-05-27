@@ -30,22 +30,31 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-3. Start Neo4j locally with Docker Compose:
+3. Create the application `.env` file and the Docker secret file for Neo4j:
+
+```bash
+cp .env.example .env
+cp neo4j_auth.txt.example neo4j_auth.txt
+```
+
+Edit `.env` if you need to change the Neo4j connection string, and replace the placeholder password in `neo4j_auth.txt`.
+
+4. Start Neo4j locally with Docker Compose:
 
 ```bash
 docker compose up -d
 ```
 
-4. Confirm Neo4j is running on `http://localhost:7474` and Bolt is available on `bolt://localhost:7687`.
+5. Confirm Neo4j is running on `http://localhost:7474` and Bolt is available on `bolt://localhost:7687`.
 
 ## Configuration
 
-This project now uses a `.env` file for application database configuration and Docker secrets for Neo4j authentication.
+This project uses:
 
-- Copy `.env.example` to `.env` and update `NEOMODEL_DATABASE_URL` as needed.
-- Copy `secrets/neo4j_password.txt.example` to `secrets/neo4j_password.txt` and replace the placeholder password.
+- a `.env` file for application database configuration
+- Docker Compose native secrets for Neo4j authentication
 
-The Neo4j service uses Docker secrets to keep the DB password out of version control.
+The Docker Compose service is configured to read Neo4j credentials from the secret source file `./neo4j_auth.txt`.
 
 ## Run the API
 
